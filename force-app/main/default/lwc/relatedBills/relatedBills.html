@@ -1,0 +1,29 @@
+<template>
+    <lightning-card title="Related Bills">
+        <div class="slds-card__body slds-card__body_inner">
+            <!-- Check if there are bills available -->
+            <template if:true={hasBills}>
+                <!-- Layout for displaying bills in tiles, 4 per row -->
+                <lightning-layout multiple-rows="true" pull-to-boundary="small">
+                    <template for:each={relatedBills.data} for:item="bill">
+                        <lightning-layout-item key={bill.Id} size="4" padding="around-small" class="slds-var-p-around_x-small">
+                            <lightning-card title={bill.Account__r.Name}>
+                                <p class="slds-var-m-bottom_xx-small">
+                                    Invoice Number: {bill.Invoice_Number__c}
+                                </p>
+                                <p class="slds-var-m-bottom_xx-small">
+                                    Balance: {bill.Balance__c}
+                                </p>
+                            </lightning-card>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+            </template>
+
+            <!-- Show message if no bills are available -->
+            <template if:false={hasBills}>
+                <p>No related bills found for this account.</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

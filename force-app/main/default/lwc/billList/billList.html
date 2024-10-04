@@ -1,0 +1,46 @@
+<template>
+    <lightning-card title="Bills" icon-name="contract_doc">
+        <div class="slds-card__body slds-card__body_inner">
+            <!-- Search Input -->
+            <lightning-input type="search" onchange={handleSearchEvent} variant="label-hidden" class="slds-var-m-bottom_small" label="Search" placeholder="Search for Bills" value={searchTerm}></lightning-input>
+            
+            <!-- Loading Spinner -->
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+
+            <!-- Error Handling -->
+            <template if:true={error}>
+                <div class="slds-text-color_error">An error occurred: {error.body.message}</div>
+            </template>
+
+            <!-- Start the Bill List -->
+            <template if:true={hasResults}>
+                <lightning-layout multiple-rows="true" pull-to-boundary="small">
+                    <template for:each={billsWithUrl} for:item="bill">
+                        <lightning-layout-item key={bill.Id} size="3" class="slds-var-p-around_x-small">
+                            <!-- Bill Tile -->
+                            <lightning-card title={bill.Account__r.Name} class="bill-tile">
+                                <p class="slds-var-m-bottom_xx-small">{bill.Account__r.Name}</p>
+                                <!-- Link to Bill Record -->
+                                <p class="slds-var-m-bottom_xx-small">
+                                    <a href={bill.billUrl} target="_blank">
+                                        {bill.Invoice_Number__c}
+                                    </a>
+                                </p>
+                                <p class="slds-var-m-bottom_xx-small">{bill.Balance__c}</p>
+                            </lightning-card>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+            </template>
+
+            <!-- No results found -->
+            <template if:true={showNoResults}>
+                <div class="slds-align_absolute-center slds-var-m-around_x-large">
+                    No Bills Found
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

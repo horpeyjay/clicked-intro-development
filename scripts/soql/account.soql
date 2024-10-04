@@ -1,0 +1,10 @@
+// Use .soql files to store SOQL queries.
+// You can execute queries in VS Code by selecting the
+//     query text and running the command:
+//     SFDX: Execute SOQL Query with Currently Selected Text
+
+//SELECT Id, Name FROM Account
+
+//Select Id, Name, Bill_By_Email__c from Account where Active__c = 'Yes' AND Bill_By_Email__c != null
+
+//Select Id, (Select Id From Bill__r Order By CreatedDate DESC) From Account
